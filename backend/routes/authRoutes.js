@@ -32,7 +32,7 @@ router.get('/getUsers', getUsers)
 router.post('/otp',otpVerification)
 
 // for getting message
-router.post('/getMessages', getMessages);
+router.get('/getMessages', getMessages);
 
 // for saving name 
 
