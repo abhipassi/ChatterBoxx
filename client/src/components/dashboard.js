@@ -231,6 +231,8 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { io } from 'socket.io-client';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Dashboard() {
   const [userList, setUserList] = useState([]);
@@ -238,6 +240,7 @@ export default function Dashboard() {
   const [currentMessage, setCurrentMessage] = useState('');
   const [username, setUsername] = useState('');
   const socketRef = useRef();
+  const navigate = useNavigate();
 
   // fetch current username 
   useEffect(() => {
@@ -249,7 +252,7 @@ export default function Dashboard() {
         console.error('Error fetching username:', err);
       });
   }, []);
-  
+
   useEffect(() => {
     // Connect to socket server
     socketRef.current = io('http://localhost:4000');
@@ -285,19 +288,19 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-  axios.get('http://localhost:4000/getMessages').then((res) => {
-    setMessages(res.data);
-  });
-}, []);
+    axios.get('http://localhost:4000/getMessages').then((res) => {
+      setMessages(res.data);
+    });
+  }, []);
 
 
   const logout = () => {
-    axios.get('http://localhost:4000/logout')
+    axios.get('http://localhost:4000/logout', { withCredentials: true })
       .then((res) => {
         console.log(res.data);
-        // Optional: redirect to login
       })
       .catch((error) => console.log(error));
+    navigate('/')
   };
 
 
