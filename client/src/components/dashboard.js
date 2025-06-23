@@ -284,6 +284,13 @@ export default function Dashboard() {
     setCurrentMessage('');
   };
 
+  useEffect(() => {
+  axios.get('http://localhost:4000/getMessages').then((res) => {
+    setMessages(res.data);
+  });
+}, []);
+
+
   const logout = () => {
     axios.get('http://localhost:4000/logout')
       .then((res) => {
