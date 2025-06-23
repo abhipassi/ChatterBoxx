@@ -39,46 +39,20 @@ exports.registerUser = async (req, res) => {
 };
 
 
-// exports.loginUser = async (req,res)=> {
-//   // password compare 
-//   var {email , password} = req.body
-//   console.log(req.body);
-
-
-//   try {
-//     let user = await userModel.findOne({email: email})
-//     console.log(user);
-//     if(user){
-//       const isMatch =  bcrypt.compare(password,user.password)
-//       if(isMatch){
-
-//       let token = jwt.sign({email:email },process.env.JWT_SECRET)
-//       res.cookie('token',token)
-//       //  return res.redirect('index.html')
-//       }
-//       else{
-//         if (!isMatch) return res.redirect('/login.html?msg=wrong_password');
-//       }
-//     }
-//     if(!user){  
-//     //  alert("user not found please signup first")
-//     //  res.redirect('signUp.html')
-//     return res.redirect('/signUp.html?msg=user_not_found');
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-
-
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
 
   try {
     const user = await userModel.findOne({ email: email });
-    console.log(user);
+    // if(user){
+      
+    // }
+    let name = user.username
+    console.log(name);
+    const userName = jwt.sign({ username:name }, process.env.JWT_SECRET)
+    res.cookie('tokenName', userName)
+    // console.log(user);
 
     if (!user) {
       // User not found
@@ -90,16 +64,7 @@ exports.loginUser = async (req, res) => {
       // Incorrect password
       return res.status(401).json({ message: 'Wrong password' });
     }
-    // Successful login
-    // const token = jwt.sign({ email: email }, process.env.JWT_SECRET, {
-    //   expiresIn: '1d',
-    // });
 
-    // res.cookie('token', token, {
-    //   httpOnly: true,
-    //   sameSite: 'Lax', // or 'Strict'/'None' if using cross-site cookies
-    //   secure: false // set to true in production with HTTPS
-    // });
     const token = jwt.sign({ email: email }, process.env.JWT_SECRET)
     res.cookie('token', token)
     console.log(token);
@@ -128,6 +93,21 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
+exports.getNameToken = (req, res) =>{
+  const tokenName = req.cookies.tokenName
+  if (!tokenName) return res.status(401).json({ msg: "No token" });
+
+  try {
+    const verify = jwt.verify(tokenName, process.env.JWT_SECRET)
+    console.log(verify.username);
+    res.json(verify.username)
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
 
 
 exports.getUsers = async (req, res) => {
@@ -148,8 +128,6 @@ exports.otpVerification = async (req, res) => {
     if (!verificationcode) {
       return res.status(400).json({ message: 'Verification code is required.' });
     }
-    // let localEmail = localStorage.getItem("userEmail")
-    // console.log(localEmail);
     const user = await userModel.findOne({ email: localEmail });
     let encryptedCode = user.verificationcode
     const isMatch = await bcrypt.compare(verificationcode, encryptedCode);
@@ -166,8 +144,6 @@ exports.otpVerification = async (req, res) => {
     return res.status(500).json({ message: 'Server error during verification.' });
   }
 };
-
-
 
 exports.getMessages = async (req, res) => {
   try {
