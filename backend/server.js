@@ -111,16 +111,16 @@ io.on("connection", (socket) => {
     // Broadcast message to all clients
     io.emit("receive_message", data);
 
-    // Optional: Save message to MongoDB
-    // const Message = require('./models/Message');
-    // const newMsg = new Message(data);
-    // await newMsg.save();
+    // Save message to MongoDB
+    const Message = require('./models/message');
+    const newMsg = new Message(data);
+    await newMsg.save();
   });
-
+  
   // Disconnect
-  // socket.on("disconnect", () => {
-  //   console.log("❌ Client disconnected:", socket.id);
-  // });
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
 });
 
 // === START SERVER ===
