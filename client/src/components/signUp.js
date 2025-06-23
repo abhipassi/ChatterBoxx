@@ -19,24 +19,24 @@ function SignUp() {
   const navigate = useNavigate()
 
   let handleName = (e) => {
-  let sanitizedName = e.target.value.trim();
-  setFullname(sanitizedName);
-}
+    let sanitizedName = e.target.value.trim();
+    setFullname(sanitizedName);
+  }
 
-let handleEmail = (e) => {
-  let sanitizedEmail = e.target.value.trim();
-  setEmail(sanitizedEmail);
-}
+  let handleEmail = (e) => {
+    let sanitizedEmail = e.target.value.trim();
+    setEmail(sanitizedEmail);
+  }
 
-let handlePassword = (e) => {
-  let sanitizedPassword = e.target.value.trim();
-  setPassword(sanitizedPassword);
-}
+  let handlePassword = (e) => {
+    let sanitizedPassword = e.target.value.trim();
+    setPassword(sanitizedPassword);
+  }
 
-let handleConfirmPass = (e) => {
-  let sanitizedConfirmPassword = e.target.value.trim();
-  setConfirmPass(sanitizedConfirmPassword);
-}
+  let handleConfirmPass = (e) => {
+    let sanitizedConfirmPassword = e.target.value.trim();
+    setConfirmPass(sanitizedConfirmPassword);
+  }
 
 
   let handleSubmit = async (e) => {
@@ -66,8 +66,11 @@ let handleConfirmPass = (e) => {
 
     try {
       let localEmail = data.email
+      // let localUserName = data.username
       localStorage.setItem('userEmail', localEmail);
-      let response = await axios.post("http://localhost:4000/user_create", data)
+      // localStorage.setItem('userName', localUserName);
+
+      let response = await axios.post("http://localhost:4000/user_create",data)
       if (response.status === 200) {
         toast.success("Otp Sent")
         navigate('/otpverify')
@@ -90,12 +93,9 @@ let handleConfirmPass = (e) => {
       else {
         console.error("Unexpected error:", error);
         toast.error("Unexpected error")
-
       }
     }
-
   }
-
 
   return (
     <>
@@ -105,9 +105,9 @@ let handleConfirmPass = (e) => {
 
           <br />
           <br />
-
+          
           <p className='font-semibold text-center w-full'>Enter your full Name</p>
-          <input type='text' onChange={handleName}  className='border-2 h-7 p-1 border-black w-56 rounded-md focus:shadow-md hover:border-colorThree transition duration-300 ease' />
+          <input type='text' onChange={handleName} className='border-2 h-7 p-1 border-black w-56 rounded-md focus:shadow-md hover:border-colorThree transition duration-300 ease' />
           <br />
 
           <p className='font-semibold text-center w-full'>Enter your email address </p>
