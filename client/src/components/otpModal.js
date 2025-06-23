@@ -26,7 +26,7 @@ function OtpModal() {
       //  console.log(response.data,"done");
       if (response.status === 200) {
         toast.success("SignUp Success")
-        navigate('/dashboard')
+        navigate('/')
         localStorage.removeItem("userEmail")
       }
 
