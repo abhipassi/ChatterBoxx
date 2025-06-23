@@ -33,6 +33,7 @@ function Login() {
         
         if(response.status === 200) {
           toast.success('Login successful')
+          
           navigate('/dashboard')
         }
       }
