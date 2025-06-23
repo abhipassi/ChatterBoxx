@@ -8,7 +8,8 @@ const {
     verifyToken,
     getUsers,
     otpVerification,
-    getMessages
+    getMessages,
+    getNameToken
 } = require('../controllers/authControllers')
 
 // route for creating a user
@@ -32,5 +33,9 @@ router.post('/otp',otpVerification)
 
 // for getting message
 router.post('/getMessages', getMessages);
+
+// for saving name 
+
+router.get('/tokenName' , getNameToken)
 
 module.exports = router;
