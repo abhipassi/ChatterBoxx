@@ -83,7 +83,6 @@ exports.verifyToken = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ msg: "No token, access denied" });
 
-
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
@@ -109,7 +108,6 @@ exports.getNameToken = (req, res) =>{
 }
 
 
-
 exports.getUsers = async (req, res) => {
   const users = await userModel.find();
   res.json(users);
@@ -118,9 +116,9 @@ exports.getUsers = async (req, res) => {
 
 exports.logoutUser = async (req, res) => {
   res.clearCookie('token')
+  res.clearCookie('tokenName')
   res.json({ msg: "logged out" })
 }
-
 
 exports.otpVerification = async (req, res) => {
   try {
