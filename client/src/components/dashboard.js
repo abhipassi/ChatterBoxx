@@ -258,7 +258,7 @@ export default function Dashboard() {
     socketRef.current = io('http://localhost:4000');
 
     // Fetch users
-    axios.get('http://localhost:4000/getUsers')
+    axios.get('http://localhost:4000/getUsers' , { withCredentials: true })
       .then((res) => {
         setUserList(res.data);
       })
@@ -288,7 +288,8 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:4000/getMessages').then((res) => {
+    axios.get('http://localhost:4000/getMessages', { withCredentials: true })
+    .then((res) => {
       setMessages(res.data);
     });
   }, []);
