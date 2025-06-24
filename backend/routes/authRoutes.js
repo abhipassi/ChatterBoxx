@@ -1,40 +1,46 @@
-    const express = require('express')
-    const router = express.Router()
+const express = require('express')
+const router = express.Router()
 
-    const {
-        registerUser,
-        loginUser,
-        logoutUser,
-        verifyToken,
-        getUsers,
-        otpVerification,
-        getMessages,
-        getNameToken
-    } = require('../controllers/authControllers')
+const {
+    registerUser,
+    loginUser,
+    logoutUser,
+    verifyToken,
+    getUsers,
+    otpVerification,
+    getMessages,
+    getNameToken
+} = require('../controllers/authControllers')
 
-    // route for creating a user
-    router.post('/user_create', registerUser)
+// PUBLIC ROUTES
 
-    // route for login a user
-    router.post('/user_login',loginUser)
+// route for creating a user
+router.post('/user_create', registerUser)   
 
-    // route for logout 
-    router.get('/logout', verifyToken, logoutUser)
+// route for login a user
+router.post('/user_login', loginUser)
+// protected routes 
 
-    // jwt verification route
-    router.get('/verifyToken', verifyToken)
+// otp verification
+router.post('/otp', otpVerification)
 
-    // get user routes
-    router.get('/getUsers', getUsers)
-    // router.get('/getUsers', getUsers)
 
-    // otp verification
-    router.post('/otp',otpVerification)
+// PROTECTED ROUTES 
 
-    // for getting message
-    router.get('/getMessages', getMessages);
+// route for logout 
+router.get('/logout', verifyToken, logoutUser)
 
-    // for saving name 
-    router.get('/tokenName', verifyToken, getNameToken)
+// jwt verification route
+router.get('/verifyToken', verifyToken)
 
-    module.exports = router;
+// get user routes
+router.get('/getUsers', verifyToken, getUsers)
+// router.get('/getUsers', getUsers)
+
+// for getting message
+router.get('/getMessages', verifyToken , getMessages);
+
+// for saving name 
+router.get('/tokenName', verifyToken, getNameToken)
+
+module.exports = router;
