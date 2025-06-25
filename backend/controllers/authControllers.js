@@ -41,18 +41,10 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     const user = await userModel.findOne({ email: email });
-    // if(user){
-      
-    // }
-    let name = user.username
-    console.log(name);
-    const userName = jwt.sign({ username:name }, process.env.JWT_SECRET)
-    res.cookie('tokenName', userName)
-    // console.log(user);
 
     if (!user) {
       // User not found
@@ -65,10 +57,16 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Wrong password' });
     }
 
-    const token = jwt.sign({ email: email }, process.env.JWT_SECRET)
-    res.cookie('token', token)
-    console.log(token);
+    // Safe to access user.username now
+    const name = user.username;
+    // console.log(name);
 
+    const userNameToken = jwt.sign({ username: name }, process.env.JWT_SECRET);
+    res.cookie('tokenName', userNameToken);
+
+    const token = jwt.sign({ email: email }, process.env.JWT_SECRET);
+    res.cookie('token', token);
+    // console.log(token);
 
     return res.status(200).json({ message: 'Login successful' });
 
@@ -77,6 +75,7 @@ exports.loginUser = async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 
 
 exports.verifyToken = (req, res, next) => {
@@ -98,7 +97,7 @@ exports.getNameToken = (req, res) =>{
 
   try {
     const verify = jwt.verify(tokenName, process.env.JWT_SECRET)
-    console.log(verify.username);
+    // console.log(verify.username);
     res.json(verify.username)
     
   } catch (error) {
