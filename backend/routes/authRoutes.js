@@ -9,7 +9,8 @@ const {
     getUsers,
     otpVerification,
     getMessages,
-    getNameToken
+    getNameToken,
+    checking
 } = require('../controllers/authControllers')
 
 // PUBLIC ROUTES
@@ -23,6 +24,8 @@ router.post('/user_login', loginUser)
 
 // otp verification
 router.post('/otp', otpVerification)
+
+router.get('/check',checking )
 
 
 // PROTECTED ROUTES 
