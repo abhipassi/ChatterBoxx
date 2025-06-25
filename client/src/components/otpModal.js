@@ -20,7 +20,7 @@ function OtpModal() {
         verificationcode: inputValue.trim(),
         localEmail: localEmail
       }
-      let response = await axios.post('http://localhost:4000/otp', data, {
+      let response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/otp`, data, {
         withCredentials: true
       })
       //  console.log(response.data,"done");
