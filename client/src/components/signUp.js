@@ -70,7 +70,7 @@ function SignUp() {
       localStorage.setItem('userEmail', localEmail);
       // localStorage.setItem('userName', localUserName);
 
-      let response = await axios.post("http://localhost:4000/user_create",data)
+      let response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user_create`,data)
       if (response.status === 200) {
         toast.success("Otp Sent")
         navigate('/otpverify')
