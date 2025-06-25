@@ -152,3 +152,7 @@ exports.getMessages = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 }
+
+exports.checking = async (req, res) =>{
+  res.json("Server is live")
+}
