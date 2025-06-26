@@ -14,8 +14,25 @@ const app = express();
 const server = http.createServer(app);
 
 
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentials: true
+// }));
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://chatter-boxx-ten.vercel.app'
+];
+
+// Update Express CORS middleware
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
@@ -40,9 +57,17 @@ app.use('/', authRoutes);
 
 const { Server } = require("socket.io");
 
+// const io = new Server(server, {
+//   pingTimeout: 60000,
+//   cors: {
+//     credentials: true
+//   }
+// });
+
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
+    origin: allowedOrigins,
     credentials: true
   }
 });
