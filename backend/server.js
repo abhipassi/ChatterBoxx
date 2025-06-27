@@ -14,27 +14,27 @@ const app = express();
 const server = http.createServer(app);
 
 
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   credentials: true
-// }));
-
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://chatter-boxx-ten.vercel.app'
-];
-
-// Update Express CORS middleware
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'https://chatter-boxx-ten.vercel.app',
   credentials: true
 }));
+
+// const allowedOrigins = [
+//   // 'http://localhost:3000',
+//   'https://chatter-boxx-ten.vercel.app/'
+// ];
+
+// Update Express CORS middleware
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -67,7 +67,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: allowedOrigins,
+    origin: 'https://chatter-boxx-ten.vercel.app',
     credentials: true
   }
 });
