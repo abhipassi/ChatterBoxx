@@ -130,9 +130,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // CORS setup
+// const allowedOrigins = [
+//   'http://localhost:3000',
+//   'https://chatterboxx-backend.onrender.com'
+// ];
+
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// }));
+
+
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://chatterboxx-backend.onrender.com'
+  'https://chatter-boxx-si statusgma.vercel.app'            
 ];
 
 app.use(cors({
@@ -145,6 +162,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.options('*', cors()); 
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
