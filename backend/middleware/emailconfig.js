@@ -1,8 +1,8 @@
-import nodemailer from 'nodemailer'
+const nodemailer = require('nodemailer');
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false, // true for 465, false for other ports
@@ -12,7 +12,7 @@ export const transporter = nodemailer.createTransport({
   },
 }); 
 
-
+module.exports = transporter
 // const sendEmail = async () => {
 //     try {
 //         const info = await transporter.sendMail({
