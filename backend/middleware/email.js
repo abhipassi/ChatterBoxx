@@ -1,4 +1,4 @@
-import { transporter } from "./emailconfig.js";
+const transporter = require("./emailconfig");
 import { Verification_Email_Template } from "./emailtemplate.js";
 import dotenv from 'dotenv';
 dotenv.config();
