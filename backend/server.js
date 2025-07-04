@@ -132,7 +132,7 @@ const __dirname = dirname(__filename);
 // CORS setup
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://chatter-boxx-ten.vercel.app'
+  'https://chatterboxx-backend.onrender.com'
 ];
 
 app.use(cors({
