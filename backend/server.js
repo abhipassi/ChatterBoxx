@@ -149,7 +149,7 @@ const __dirname = dirname(__filename);
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://chatter-boxx-sistatusgma.vercel.app'            
+  'https://chatter-boxx-sigma.vercel.app'            
 ];
 
 app.use(cors({
