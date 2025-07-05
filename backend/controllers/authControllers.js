@@ -99,10 +99,10 @@
 //     const verify = jwt.verify(tokenName, process.env.JWT_SECRET)
 //     // console.log(verify.username);
 //     res.json(verify.username)
-    
+
 //   } catch (error) {
 //     console.log(error);
-    
+
 //   }
 // }
 
@@ -147,7 +147,7 @@
 //     const messages = await Message.find().sort({ createdAt: 1 });
 //     res.json(messages);
 
-    
+
 //   } catch (err) {
 //     res.status(500).json({ message: 'Server error' });
 //   }
@@ -215,8 +215,19 @@ export const loginUser = async (req, res) => {
     const userNameToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET);
     const token = jwt.sign({ email }, process.env.JWT_SECRET);
 
-    res.cookie('tokenName', userNameToken);
-    res.cookie('token', token);
+    // res.cookie('tokenName', userNameToken);
+    // res.cookie('token', token);
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: true,         // required for HTTPS
+      sameSite: 'None'      // required for cross-site
+    });
+
+    res.cookie('tokenName', userNameToken, {
+      secure: true,
+      sameSite: 'None'
+    });
 
     return res.status(200).json({ message: 'Login successful' });
 
